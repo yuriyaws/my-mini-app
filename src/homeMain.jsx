@@ -9,7 +9,15 @@ function HomeMain({ setPage, tgUserId }) {
             src="/public/aycdLogo.jpg"
             className="h-25 w-25 rounded-3xl"
           ></img>
-          <div>Добро пожаловать, пользователь {tgUserId}</div>
+
+          <div>
+            {tgUserId ? (
+              <p>Ваш Telegram ID: {tgUserId}</p>
+            ) : (
+              <p>Загрузка ID...</p>
+            )}
+          </div>
+
           <h1 className="text-xl font-bold">AYCD</h1>
           <p className="text-sm text-gray-500">
             Быстрая доставка товаров из Китая в Россию
