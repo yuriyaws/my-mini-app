@@ -126,6 +126,11 @@ function App() {
         </button>
       </div>
 
+      <div>
+        {tgUserId ? <p>Ваш Telegram ID: {tgUserId}</p> : <p>Загрузка...</p>}
+        {/* остальные компоненты, передавай в них tgUserId как prop */}
+      </div>
+
       {/* Контент */}
       {page === "home" && <Home setPage={setPage} />}
       {page === "add" && <Add />}
