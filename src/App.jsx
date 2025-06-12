@@ -12,28 +12,21 @@ function App() {
   const [tgUserId, setTgUserId] = useState(null);
 
   useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
+    const urlParams = new URLSearchParams(window.location.search);
+    const userIdFromQuery = urlParams.get("userId");
 
-      const user = window.Telegram.WebApp.initDataUnsafe?.user;
-      console.log("initDataUnsafe:", window.Telegram.WebApp.initDataUnsafe);
-
-      if (user?.id) {
-        setTgUserId(user.id);
-        console.log("Telegram User ID:", user.id);
-      } else {
-        console.warn("Пользователь не найден");
-      }
+    if (userIdFromQuery) {
+      setTgUserId(userIdFromQuery);
+      console.log("User ID from URL:", userIdFromQuery);
     } else {
-      console.warn("Telegram WebApp не доступен");
+      console.warn("userId не найден в URL");
     }
   }, []);
 
   return (
     <>
       <div className="fixed bottom-0 bg-white border-t border-gray-300 w-full h-14 z-10 flex flex-row justify-between px-10">
-        <p>{JSON.stringify(window.Telegram?.WebApp?.initDataUnsafe)}</p>
-
+        <div>{tgUserId}</div>
         <button
           className="flex flex-col justify-center items-center"
           onClick={() => setPage("home")}
