@@ -13,30 +13,26 @@ function App() {
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready(); // важно вызвать ready()
+      window.Telegram.WebApp.ready();
 
       const user = window.Telegram.WebApp.initDataUnsafe?.user;
-      if (user && user.id) {
+      console.log("initDataUnsafe:", window.Telegram.WebApp.initDataUnsafe);
+
+      if (user?.id) {
         setTgUserId(user.id);
         console.log("Telegram User ID:", user.id);
       } else {
-        console.log("Пользователь не найден или не в Telegram");
+        console.warn("Пользователь не найден");
       }
     } else {
-      console.log("Telegram WebApp не доступен");
+      console.warn("Telegram WebApp не доступен");
     }
   }, []);
 
   return (
     <>
       <div className="fixed bottom-0 bg-white border-t border-gray-300 w-full h-14 z-10 flex flex-row justify-between px-10">
-        <div>
-          {tgUserId ? (
-            <p>Ваш Telegram ID: {tgUserId}</p>
-          ) : (
-            <p>Загрузка ID...</p>
-          )}
-        </div>
+        <p>{JSON.stringify(window.Telegram?.WebApp?.initDataUnsafe)}</p>
 
         <button
           className="flex flex-col justify-center items-center"
