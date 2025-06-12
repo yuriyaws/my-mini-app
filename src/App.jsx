@@ -13,11 +13,17 @@ function App() {
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready(); // важно вызвать ready()
+
       const user = window.Telegram.WebApp.initDataUnsafe?.user;
-      if (user) {
+      if (user && user.id) {
         setTgUserId(user.id);
-        console.log("Telegram user ID:", user.id);
+        console.log("Telegram User ID:", user.id);
+      } else {
+        console.log("Пользователь не найден или не в Telegram");
       }
+    } else {
+      console.log("Telegram WebApp не доступен");
     }
   }, []);
 
