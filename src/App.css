@@ -1,6 +1,6 @@
 @import "tailwindcss";
+html,
 body {
-    background-color: #ffffff; /* белый цвет */
-    margin: 0;
-    padding: 0;
+    background-color: #ffffff !important;
+    color: #000000 !important;
 }
