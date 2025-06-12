@@ -4,7 +4,7 @@ import HomeMain from "./homeMain";
 import HomeAbout from "./homeAbout";
 import HomeFAQ from "./homeFAQ";
 
-function Home({ setPage, tgUserId }) {
+function Home({ setPage }) {
   const [homeTab, setHomeTab] = useState("homeMain");
 
   return (
@@ -43,9 +43,7 @@ function Home({ setPage, tgUserId }) {
       </nav>
 
       {/* Контент */}
-      {homeTab === "homeMain" && (
-        <HomeMain setPage={setPage} tgUserId={tgUserId} />
-      )}
+      {homeTab === "homeMain" && <HomeMain setPage={setPage} />}
       {homeTab === "homeAbout" && <HomeAbout />}
       {homeTab === "homeFAQ" && <HomeFAQ />}
     </>

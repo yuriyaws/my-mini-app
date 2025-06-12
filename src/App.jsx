@@ -30,6 +30,14 @@ function App() {
   return (
     <>
       <div className="fixed bottom-0 bg-white border-t border-gray-300 w-full h-14 z-10 flex flex-row justify-between px-10">
+        <div>
+          {tgUserId ? (
+            <p>Ваш Telegram ID: {tgUserId}</p>
+          ) : (
+            <p>Загрузка ID...</p>
+          )}
+        </div>
+
         <button
           className="flex flex-col justify-center items-center"
           onClick={() => setPage("home")}

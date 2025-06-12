@@ -1,4 +1,4 @@
-function HomeMain({ setPage, tgUserId }) {
+function HomeMain({ setPage }) {
   return (
     <>
       {/* Содержание пункта Главная */}
@@ -9,14 +9,6 @@ function HomeMain({ setPage, tgUserId }) {
             src="/public/aycdLogo.jpg"
             className="h-25 w-25 rounded-3xl"
           ></img>
-
-          <div>
-            {tgUserId ? (
-              <p>Ваш Telegram ID: {tgUserId}</p>
-            ) : (
-              <p>Загрузка ID...</p>
-            )}
-          </div>
 
           <h1 className="text-xl font-bold">AYCD</h1>
           <p className="text-sm text-gray-500">
