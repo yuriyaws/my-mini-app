@@ -6,7 +6,7 @@ const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2b3V3d2xxYnVobHZpeGJwZGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc3NTE5MzMsImV4cCI6MjA2MzMyNzkzM30.LfFBbYTX2eMGGnEZK-JbMJZkVrrXKkU2ML9OBE8IK8s";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-function Address({ setPage }) {
+function Address({ setPage, tgUserId }) {
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -103,6 +103,7 @@ function Address({ setPage }) {
             status: "ожидает оплаты",
             total: prices.total,
             ...orderData,
+            tgUserId: { tgUserId },
           },
         ])
         .select()

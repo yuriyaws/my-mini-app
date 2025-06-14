@@ -131,7 +131,7 @@ function App() {
       {/* Контент */}
       {page === "home" && <Home setPage={setPage} tgUserId={tgUserId} />}
       {page === "add" && <Add tgUserId={tgUserId} />}
-      {page === "cart" && <Cart setPage={setPage} />}
+      {page === "cart" && <Cart setPage={setPage} tgUserId={tgUserId} />}
       {page === "orders" && <Orders tgUserId={tgUserId} />}
       {page === "adress" && <Adress setPage={setPage} tgUserId={tgUserId} />}
     </>
