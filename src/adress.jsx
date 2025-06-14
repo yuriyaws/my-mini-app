@@ -103,7 +103,7 @@ function Address({ setPage, tgUserId }) {
             status: "ожидает оплаты",
             total: prices.total,
             ...orderData,
-            tgUserId: { tgUserId },
+            tgUserId: tgUserId,
           },
         ])
         .select()

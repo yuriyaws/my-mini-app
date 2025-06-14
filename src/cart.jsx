@@ -19,7 +19,7 @@ function Cart({ setPage, tgUserId }) {
     const { data, error } = await supabase
       .from("item")
       .select("*")
-      .eq("tgUserId", { tgUserId })
+      .eq("tgUserId", tgUserId)
       .eq("status", "в корзине"); // Фильтруем только товары в корзине
 
     if (error) {
