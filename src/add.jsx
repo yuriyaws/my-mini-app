@@ -1,39 +1,51 @@
-import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import React, { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = 'https://tvouwwlqbuhlvixbpdha.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2b3V3d2xxYnVobHZpeGJwZGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc3NTE5MzMsImV4cCI6MjA2MzMyNzkzM30.LfFBbYTX2eMGGnEZK-JbMJZkVrrXKkU2ML9OBE8IK8s'; // Лучше вынести в env-переменные
+const supabaseUrl = "https://tvouwwlqbuhlvixbpdha.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2b3V3d2xxYnVobHZpeGJwZGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc3NTE5MzMsImV4cCI6MjA2MzMyNzkzM30.LfFBbYTX2eMGGnEZK-JbMJZkVrrXKkU2ML9OBE8IK8s"; // Лучше вынести в env-переменные
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-function Add() {
-  const [imageUrl, setImageUrl] = useState('');
-  const [screenshot_url, setscreenshot_url] = useState('');
+function Add({ tgUserId }) {
+  const [imageUrl, setImageUrl] = useState("");
+  const [screenshot_url, setscreenshot_url] = useState("");
 
-  const [url, setUrl] = useState('');
-  const [size, setSize] = useState('');
-  const [category, setCategory] = useState('');
-  const [price_cny, setPrice_cny] = useState('');
-  const [status, setStatus] = useState('в корзине'); // например, дефолтный статус
+  const [url, setUrl] = useState("");
+  const [size, setSize] = useState("");
+  const [category, setCategory] = useState("");
+  const [price_cny, setPrice_cny] = useState("");
+  const [status, setStatus] = useState("в корзине"); // например, дефолтный статус
   const [created_at, setCreated_at] = useState(new Date().toISOString());
 
   const handleAddItem = async () => {
     const { data, error } = await supabase
-      .from('item')
-      .insert([{ url, screenshot_url, size, category, price_cny, status, created_at }]);
+      .from("item")
+      .insert([
+        {
+          url,
+          screenshot_url,
+          size,
+          category,
+          price_cny,
+          status,
+          created_at,
+          tgUserId,
+        },
+      ]);
 
     if (error) {
-      console.error('Ошибка при добавлении:', error.message);
-      alert('Ошибка при добавлении');
+      console.error("Ошибка при добавлении:", error.message);
+      alert("Ошибка при добавлении");
     } else {
-      console.log('Добавлено:', data);
-      alert('Продукт добавлен!');
+      console.log("Добавлено:", data);
+      alert("Продукт добавлен!");
       // Очистка
-      setUrl('');
-      setscreenshot_url('');
-      setSize('');
-      setCategory('');
-      setPrice_cny('');
-      setImageUrl('');
+      setUrl("");
+      setscreenshot_url("");
+      setSize("");
+      setCategory("");
+      setPrice_cny("");
+      setImageUrl("");
     }
   };
 
@@ -41,23 +53,22 @@ function Add() {
     const file = e.target.files[0];
     if (!file) return;
 
-    const fileExt = file.name.split('.').pop();
+    const fileExt = file.name.split(".").pop();
     const fileName = `${Date.now()}.${fileExt}`;
     const filePath = fileName;
 
     const { error: uploadError } = await supabase.storage
-      .from('screenshots') // Замените на свой бакет
+      .from("screenshots") // Замените на свой бакет
       .upload(filePath, file);
 
     if (uploadError) {
-      console.error('Ошибка загрузки изображения:', uploadError.message);
-      alert('Ошибка загрузки изображения');
+      console.error("Ошибка загрузки изображения:", uploadError.message);
+      alert("Ошибка загрузки изображения");
       return;
     }
 
-    const { data: publicUrlData } = supabase
-      .storage
-      .from('screenshots')
+    const { data: publicUrlData } = supabase.storage
+      .from("screenshots")
       .getPublicUrl(filePath);
 
     const publicUrl = publicUrlData?.publicUrl;
@@ -70,11 +81,12 @@ function Add() {
   return (
     <div className="px-10 mt-7 mb-21">
       <h1 className="text-xl font-bold">Добавить товар</h1>
-
       {/* Ссылка на товар */}
       <div className="mt-3">
         <label htmlFor="Link">
-          <span className="text-sm font-medium text-gray-700">Ссылка на товар</span>
+          <span className="text-sm font-medium text-gray-700">
+            Ссылка на товар
+          </span>
           <input
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -87,7 +99,9 @@ function Add() {
 
       {/* Скриншот товара */}
       <div className="mt-3">
-        <label htmlFor="image" className="text-sm font-medium text-gray-700">Скриншот товара</label>
+        <label htmlFor="image" className="text-sm font-medium text-gray-700">
+          Скриншот товара
+        </label>
         <div className="mt-1 flex items-center">
           {imageUrl ? (
             <div className="relative w-full">
@@ -100,8 +114,8 @@ function Add() {
                 type="button"
                 className="absolute bottom-2 right-2 bg-gray-200 px-2 py-1 text-sm rounded hover:bg-gray-300"
                 onClick={() => {
-                  setImageUrl('');
-                  setscreenshot_url('');
+                  setImageUrl("");
+                  setscreenshot_url("");
                 }}
               >
                 Изменить
@@ -146,7 +160,7 @@ function Add() {
 
       {/* Размер и цена */}
       <div className="mt-3 flex flex-row gap-5">
-        <div className='w-full'>
+        <div className="w-full">
           <span className="text-sm font-medium text-gray-700">Размер</span>
           <input
             value={size}
@@ -156,7 +170,7 @@ function Add() {
             className="mt-0.5 w-full h-8 rounded-lg border border-gray-300 px-2 text-sm"
           />
         </div>
-        <div className='w-full'>
+        <div className="w-full">
           <span className="text-sm font-medium text-gray-700">Цена (¥)</span>
           <input
             value={price_cny}
@@ -174,9 +188,11 @@ function Add() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className='mt-0.5 w-full h-8 rounded-lg border border-gray-300 px-2 appearance-none cursor-pointer text-sm'
+            className="mt-0.5 w-full h-8 rounded-lg border border-gray-300 px-2 appearance-none cursor-pointer text-sm"
           >
-            <option value="" disabled>Выберите категорию</option>
+            <option value="" disabled>
+              Выберите категорию
+            </option>
             <optgroup label="Обувь">
               <option value="Кроссовки">Кроссовки</option>
               <option value="Ботинки">Ботинки</option>
@@ -209,8 +225,12 @@ function Add() {
               <option value="Шарф">Шарф</option>
             </optgroup>
             <optgroup label="Сумки/Рюкзаки">
-              <option value="Женская сумка маленькая">Женская сумка маленькая</option>
-              <option value="Женская сумка большая">Женская сумка большая</option>
+              <option value="Женская сумка маленькая">
+                Женская сумка маленькая
+              </option>
+              <option value="Женская сумка большая">
+                Женская сумка большая
+              </option>
               <option value="Рюкзак">Рюкзак</option>
               <option value="Чемодан">Чемодан</option>
               <option value="Дорожная сумка">Дорожная сумка</option>

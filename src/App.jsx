@@ -26,7 +26,6 @@ function App() {
   return (
     <>
       <div className="fixed bottom-0 bg-white border-t border-gray-300 w-full h-14 z-10 flex flex-row justify-between px-10">
-        <div>{tgUserId}</div>
         <button
           className="flex flex-col justify-center items-center"
           onClick={() => setPage("home")}
@@ -131,10 +130,10 @@ function App() {
 
       {/* Контент */}
       {page === "home" && <Home setPage={setPage} tgUserId={tgUserId} />}
-      {page === "add" && <Add />}
+      {page === "add" && <Add tgUserId={tgUserId} />}
       {page === "cart" && <Cart setPage={setPage} />}
-      {page === "orders" && <Orders />}
-      {page === "adress" && <Adress setPage={setPage} />}
+      {page === "orders" && <Orders tgUserId={tgUserId} />}
+      {page === "adress" && <Adress setPage={setPage} tgUserId={tgUserId} />}
     </>
   );
 }
