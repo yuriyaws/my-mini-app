@@ -54,9 +54,11 @@ function OrdersActive({ tgUserId }) {
               <div className="flex flex-row justify-between items-start">
                 <div>
                   <p>Заказ #{order.id}</p>
-                  <p className="text-sm">От {order.created_at}</p>
+                  <p className="text-sm">
+                    От {new Date(order.created_at).toLocaleDateString("ru-RU")}
+                  </p>
                 </div>
-                <button className="text-sm">{order.status}</button>
+                <button className="text-xs">{order.status}</button>
               </div>
               {order.paid ? (
                 <></>
