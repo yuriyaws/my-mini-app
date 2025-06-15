@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = "https://tvouwwlqbuhlvixbpdha.supabase.co";
@@ -9,6 +9,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 function OrdersActive({ tgUserId }) {
   const [orders, setOrders] = useState([]); // товары в корзине
   const [loading, setLoading] = useState(true); // статус загрузки
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     fetchCartItems();
@@ -26,6 +28,7 @@ function OrdersActive({ tgUserId }) {
             )
         `,
       )
+      .eq(tgUserId, tgUserId)
       .neq("status", "доставлен");
 
     if (error) {
@@ -40,6 +43,20 @@ function OrdersActive({ tgUserId }) {
     alert(
       "Для оплаты заказа напишите номер заказа в поддержку (команда /support в боте)",
     );
+  };
+
+  const copyTrack = () => {
+    const input = inputRef.current;
+    if (input) {
+      navigator.clipboard
+        .writeText(input.value) // копируем текст в буфер обмена
+        .then(() => {
+          alert("Трек номер скопирован");
+        })
+        .catch((err) => {
+          console.error("Ошибка копирования:", err);
+        });
+    }
   };
 
   return (
@@ -218,11 +235,12 @@ function OrdersActive({ tgUserId }) {
                   </label>
                   <div className="flex items-center">
                     <input
+                      ref={inputRef}
                       value={order.track_number}
                       disabled
                       className="border border-gray-300 rounded-md px-2 text-md text-gray-500"
                     ></input>
-                    <button className="pl-5">
+                    <button onClick={copyTrack} className="pl-5">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
