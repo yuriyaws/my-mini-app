@@ -28,7 +28,7 @@ function OrdersActive({ tgUserId }) {
             )
         `,
       )
-      .eq(tgUserId, tgUserId)
+      .eq("tgUserId", tgUserId)
       .neq("status", "доставлен");
 
     if (error) {
