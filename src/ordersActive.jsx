@@ -15,19 +15,16 @@ function OrdersActive({ tgUserId }) {
   }, []);
 
   const fetchCartItems = async () => {
-    const { data, error } = await supabase
-      .from("order")
-      .select(
-        `
+    const { data, error } = await supabase.from("order").select(
+      `
             *,
             orderItem (
             *,
             item (*)
             )
         `,
-      )
-      .eq("tgUserId", tgUserId)
-      .neq("status", "доставлен");
+    );
+    ç.eq("tgUserId", tgUserId).neq("status", "доставлен");
 
     if (error) {
       console.error("Ошибка при загрузке корзины:", error.message);
@@ -35,6 +32,12 @@ function OrdersActive({ tgUserId }) {
       setOrders(data); // сохраняем полученные товары
     }
     setLoading(false); // загрузка завершена
+  };
+
+  const payModal = () => {
+    alert(
+      "Для оплаты заказа напишите номер заказа в поддержку (команда /support в боте)",
+    );
   };
 
   return (
@@ -64,7 +67,10 @@ function OrdersActive({ tgUserId }) {
                 <></>
               ) : (
                 <div>
-                  <button className="px-2 py-1 bg-blue-500 rounded-md text-xs text-white font-medium">
+                  <button
+                    onClick={payModal}
+                    className="px-2 py-1 bg-blue-500 rounded-md text-xs text-white font-medium"
+                  >
                     Оплатить заказ
                   </button>
                 </div>
@@ -191,6 +197,19 @@ function OrdersActive({ tgUserId }) {
               ))}
 
               {/*  */}
+
+              {order.status === "куплен в китае" ? (
+                <div>
+                  <span className="h-0.25 w-full bg-gray-300 my-1"></span>
+                  <p>
+                    Ваш заказ выкуплен, чтобы убедиться в качетсве товаров вы
+                    можете связаться с поддержкой (/support).
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
+
               <span className="h-0.25 w-full bg-gray-300 my-1"></span>
 
               <div className="flex flex-row justify-between">

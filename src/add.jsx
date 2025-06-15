@@ -18,27 +18,25 @@ function Add({ tgUserId }) {
   const [created_at, setCreated_at] = useState(new Date().toISOString());
 
   const handleAddItem = async () => {
-    const { data, error } = await supabase
-      .from("item")
-      .insert([
-        {
-          url,
-          screenshot_url,
-          size,
-          category,
-          price_cny,
-          status,
-          created_at,
-          tgUserId,
-        },
-      ]);
+    const { data, error } = await supabase.from("item").insert([
+      {
+        url,
+        screenshot_url,
+        size,
+        category,
+        price_cny,
+        status,
+        created_at,
+        tgUserId,
+      },
+    ]);
 
     if (error) {
       console.error("Ошибка при добавлении:", error.message);
       alert("Ошибка при добавлении");
     } else {
       console.log("Добавлено:", data);
-      alert("Продукт добавлен!");
+      alert("Товар добавлен");
       // Очистка
       setUrl("");
       setscreenshot_url("");

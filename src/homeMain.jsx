@@ -1,4 +1,10 @@
 function HomeMain({ setPage }) {
+  const supportModal = () => {
+    alert(
+      "Для обращения в поддержку воспользуйтесь командой /support в телеграм боте",
+    );
+  };
+
   return (
     <>
       {/* Содержание пункта Главная */}
@@ -81,7 +87,9 @@ function HomeMain({ setPage }) {
         <div className="flex flex-col items-center">
           <p className="text-sm text-gray-500">
             Есть вопросы?{" "}
-            <a className="text-blue-500 underline">Свяжитесь с нами</a>
+            <button onClick={supportModal} className="text-blue-500 underline">
+              Свяжитесь с нами
+            </button>
           </p>
         </div>
       </div>
