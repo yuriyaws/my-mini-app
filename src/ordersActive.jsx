@@ -15,16 +15,19 @@ function OrdersActive({ tgUserId }) {
   }, []);
 
   const fetchCartItems = async () => {
-    const { data, error } = await supabase.from("order").select(
-      `
+    const { data, error } = await supabase
+      .from("order")
+      .select(
+        `
             *,
             orderItem (
             *,
             item (*)
             )
         `,
-    );
-    ç.eq("tgUserId", tgUserId).neq("status", "доставлен");
+      )
+      .eq("tgUserId", tgUserId)
+      .neq("status", "доставлен");
 
     if (error) {
       console.error("Ошибка при загрузке корзины:", error.message);
