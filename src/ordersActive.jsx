@@ -89,7 +89,7 @@ function OrdersActive({ tgUserId }) {
                       >
                         <p className="text-white">1</p>
                       </div>
-                      <p className="text-[12px]">Заказ принят</p>
+                      <p className="text-xs">Принят</p>
                     </div>
 
                     {/* Этап 2: Куплен в Китае */}
@@ -107,7 +107,7 @@ function OrdersActive({ tgUserId }) {
                       >
                         <p className="text-white">2</p>
                       </div>
-                      <p className="text-[12px]">Куплен в Китае</p>
+                      <p className="text-xs">Куплен</p>
                     </div>
 
                     {/* Этап 3: Передан в доставку */}
@@ -123,7 +123,7 @@ function OrdersActive({ tgUserId }) {
                       >
                         <p className="text-white">3</p>
                       </div>
-                      <p className="text-[12px]">Передан в доставку</p>
+                      <p className="text-xs">В доставке</p>
                     </div>
 
                     {/* Этап 4: Доставлен */}
@@ -137,7 +137,7 @@ function OrdersActive({ tgUserId }) {
                       >
                         <p className="text-white">4</p>
                       </div>
-                      <p className="text-[12px]">Доставлен</p>
+                      <p className="text-xs">Доставлен</p>
                     </div>
                   </div>
 
