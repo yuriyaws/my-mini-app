@@ -6,7 +6,7 @@ function HomeMain({ setPage }) {
         {/* Информация о нас */}
         <div className="flex flex-col items-center gap-2">
           <img
-            src="/assets/aycdLogo.jpg"
+            src="https://tvouwwlqbuhlvixbpdha.supabase.co/storage/v1/object/public/screenshots//photo_2025-06-15%2003.55.20.jpeg"
             className="h-25 w-25 rounded-3xl"
           ></img>
 

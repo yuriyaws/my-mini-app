@@ -25,9 +25,9 @@ function App() {
 
   return (
     <>
-      <div className="fixed bottom-0 bg-white border-t border-gray-300 w-full h-18 z-10 flex flex-row justify-between px-10">
+      <div className="fixed bottom-0 bg-white border-t border-gray-300 w-full h-18 z-10 flex flex-row justify-between items-baseline px-10">
         <button
-          className="flex flex-col justify-center items-center"
+          className="flex flex-col justify-center items-center pt-2.5"
           onClick={() => setPage("home")}
         >
           <svg
