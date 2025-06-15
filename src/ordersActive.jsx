@@ -71,99 +71,92 @@ function OrdersActive({ tgUserId }) {
               {order.paid === true ? (
                 <div>
                   <div className="flex flex-row justify-between px-1 mt-2 mb-1">
-                    {order.status === "заказ принят" ? (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-blue-600 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">1</p>
-                        </div>
-                        <p className="text-xs">Заказ принят</p>
+                    {/* Этап 1: Заказ принят */}
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={`w-10 h-10 rounded-3xl flex items-center justify-center ${
+                          [
+                            "заказ принят",
+                            "куплен в китае",
+                            "передан в доставку",
+                            "доставлен",
+                          ].includes(order.status)
+                            ? "bg-blue-600"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <p className="text-white">1</p>
                       </div>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-gray-300 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">1</p>
-                        </div>
-                        <p className="text-xs">Заказ принят</p>
-                      </div>
-                    )}
-
-                    {order.status === "куплен в китае" ? (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-blue-600 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">2</p>
-                        </div>
-                        <p className="text-xs">Куплен в Китае</p>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-gray-300 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">2</p>
-                        </div>
-                        <p className="text-xs">Куплен в Китае</p>
-                      </div>
-                    )}
-
-                    {order.status === "передан в доставку" ? (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-blue-600 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">3</p>
-                        </div>
-                        <p className="text-xs">Передан в доставку</p>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-gray-300 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">3</p>
-                        </div>
-                        <p className="text-xs">Передан в доставку</p>
-                      </div>
-                    )}
-
-                    {order.status === "доставлен" ? (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-blue-600 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">4</p>
-                        </div>
-                        <p className="text-xs">Доставлен</p>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 bg-gray-300 rounded-3xl flex items-center justify-center">
-                          <p className="text-white">4</p>
-                        </div>
-                        <p className="text-xs">Доставлен</p>
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <div className="relative">
-                      <div className="h-1 w-full bg-gray-200 rounded-xl mt-2 mb-1 absolute"></div>
-                      {order.status === "заказ принят" ? (
-                        <div className="h-1 w-[25%] bg-blue-600 rounded-xl mt-2 mb-1 absolute"></div>
-                      ) : (
-                        <></>
-                      )}
-                      {order.status === "заказ принят" ? (
-                        <div className="h-1 w-[25%] bg-blue-600 rounded-xl mt-2 mb-1 absolute"></div>
-                      ) : (
-                        <></>
-                      )}
-                      {order.status === "куплен в китае" ? (
-                        <div className="h-1 w-[50%] bg-blue-600 rounded-xl mt-2 mb-1 absolute"></div>
-                      ) : (
-                        <></>
-                      )}
-                      {order.status === "передан в доставку" ? (
-                        <div className="h-1 w-[75%] bg-blue-600 rounded-xl mt-2 mb-1 absolute"></div>
-                      ) : (
-                        <></>
-                      )}
-                      {order.status === "доствален" ? (
-                        <div className="h-1 w-[100%] bg-blue-600 rounded-xl mt-2 mb-1 absolute"></div>
-                      ) : (
-                        <></>
-                      )}
+                      <p className="text-xs">Заказ принят</p>
                     </div>
+
+                    {/* Этап 2: Куплен в Китае */}
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={`w-10 h-10 rounded-3xl flex items-center justify-center ${
+                          [
+                            "куплен в китае",
+                            "передан в доставку",
+                            "доставлен",
+                          ].includes(order.status)
+                            ? "bg-blue-600"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <p className="text-white">2</p>
+                      </div>
+                      <p className="text-xs">Куплен в Китае</p>
+                    </div>
+
+                    {/* Этап 3: Передан в доставку */}
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={`w-10 h-10 rounded-3xl flex items-center justify-center ${
+                          ["передан в доставку", "доставлен"].includes(
+                            order.status,
+                          )
+                            ? "bg-blue-600"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <p className="text-white">3</p>
+                      </div>
+                      <p className="text-xs">Передан в доставку</p>
+                    </div>
+
+                    {/* Этап 4: Доставлен */}
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={`w-10 h-10 rounded-3xl flex items-center justify-center ${
+                          order.status === "доставлен"
+                            ? "bg-blue-600"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <p className="text-white">4</p>
+                      </div>
+                      <p className="text-xs">Доставлен</p>
+                    </div>
+                  </div>
+
+                  {/* Прогресс-линия */}
+                  <div className="relative">
+                    <div className="h-1 w-full bg-gray-200 rounded-xl mt-2 mb-1 absolute"></div>
+                    <div
+                      className="h-1 bg-blue-600 rounded-xl mt-2 mb-1 absolute"
+                      style={{
+                        width:
+                          order.status === "заказ принят"
+                            ? "25%"
+                            : order.status === "куплен в китае"
+                              ? "50%"
+                              : order.status === "передан в доставку"
+                                ? "75%"
+                                : order.status === "доставлен"
+                                  ? "100%"
+                                  : "0%",
+                      }}
+                    ></div>
                   </div>
                 </div>
               ) : (
