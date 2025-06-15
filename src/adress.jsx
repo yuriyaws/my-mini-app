@@ -104,6 +104,7 @@ function Address({ setPage, tgUserId }) {
             total: prices.total,
             ...orderData,
             tgUserId: tgUserId,
+            track_number: null,
           },
         ])
         .select()
