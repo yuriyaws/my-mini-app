@@ -86,7 +86,7 @@ function OrdersComplete({ tgUserId }) {
                       >
                         <p className="text-white">1</p>
                       </div>
-                      <p className="text-xs">Заказ принят</p>
+                      <p className="text-xs">Принят</p>
                     </div>
 
                     {/* Этап 2: Куплен в Китае */}
@@ -104,7 +104,7 @@ function OrdersComplete({ tgUserId }) {
                       >
                         <p className="text-white">2</p>
                       </div>
-                      <p className="text-xs">Куплен в Китае</p>
+                      <p className="text-xs">Куплен</p>
                     </div>
 
                     {/* Этап 3: Передан в доставку */}
@@ -120,7 +120,7 @@ function OrdersComplete({ tgUserId }) {
                       >
                         <p className="text-white">3</p>
                       </div>
-                      <p className="text-xs">Передан в доставку</p>
+                      <p className="text-xs">В доставке</p>
                     </div>
 
                     {/* Этап 4: Доставлен */}
