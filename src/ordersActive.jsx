@@ -204,8 +204,8 @@ function OrdersActive({ tgUserId }) {
               {order.status === "куплен в китае" ? (
                 <div>
                   <span className="h-0.25 w-full bg-gray-300 my-1"></span>
-                  <div className="bg-gray-500 rounded-2xl">
-                    <p className="px-1 py-1 text-lg text-gray-800">
+                  <div className="bg-gray-300 rounded-lg">
+                    <p className="px-1 py-1 text-sm text-gray-800">
                       Ваш заказ выкуплен, чтобы убедиться в качетсве товаров вы
                       можете связаться с поддержкой (/support)
                     </p>
