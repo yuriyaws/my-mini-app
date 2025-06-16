@@ -23,6 +23,31 @@ function App() {
     }
   }, []);
 
+  const [yuanToRubRate, setYuanToRubRate] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchYuanRate = async () => {
+      try {
+        const response = await fetch("https://open.er-api.com/v6/latest/CNY");
+        const data = await response.json();
+
+        if (data?.rates?.RUB) {
+          setYuanToRubRate(data.rates.RUB);
+          // console.log(`Курс юаня: ${data.rates.RUB}`);
+        } else {
+          console.error("Курс RUB не найден в ответе.");
+          setError("Курс RUB не найден.");
+        }
+      } catch (err) {
+        console.error("Ошибка загрузки курса:", err.message);
+        setError("Ошибка загрузки курса.");
+      }
+    };
+
+    fetchYuanRate(); // Вызывается один раз при монтировании компонента
+  }, []);
+
   return (
     <>
       <div className="fixed bottom-0 bg-white border-t border-gray-300 w-full h-18 z-10 flex flex-row justify-between items-baseline px-10">
@@ -133,7 +158,13 @@ function App() {
       {page === "add" && <Add tgUserId={tgUserId} />}
       {page === "cart" && <Cart setPage={setPage} tgUserId={tgUserId} />}
       {page === "orders" && <Orders tgUserId={tgUserId} />}
-      {page === "adress" && <Adress setPage={setPage} tgUserId={tgUserId} />}
+      {page === "adress" && (
+        <Adress
+          setPage={setPage}
+          tgUserId={tgUserId}
+          yuanToRubRate={yuanToRubRate}
+        />
+      )}
     </>
   );
 }

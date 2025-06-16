@@ -36,7 +36,36 @@ function Cart({ setPage, tgUserId }) {
     (sum, item) => sum + Number(item.price_cny),
     0,
   );
-  const grandTotal = totalPrice + comission + deliveryInChina;
+
+  const [yuanToRubRate, setYuanToRubRate] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchYuanRate = async () => {
+      try {
+        const response = await fetch("https://open.er-api.com/v6/latest/CNY");
+        const data = await response.json();
+
+        if (data?.rates?.RUB) {
+          setYuanToRubRate(data.rates.RUB);
+          // console.log(`Курс юаня: ${data.rates.RUB}`);
+        } else {
+          console.error("Курс RUB не найден в ответе.");
+          setError("Курс RUB не найден.");
+        }
+      } catch (err) {
+        console.error("Ошибка загрузки курса:", err.message);
+        setError("Ошибка загрузки курса.");
+      }
+    };
+
+    fetchYuanRate(); // Вызывается один раз при монтировании компонента
+  }, []);
+
+  const grandTotal =
+    totalPrice * (yuanToRubRate + 0.8) + comission + deliveryInChina;
+
+  const displayYuanRate = yuanToRubRate + 0.8;
 
   return (
     <>
@@ -110,18 +139,22 @@ function Cart({ setPage, tgUserId }) {
               <p className="text-sm">{totalPrice} ¥</p>
             </div>
             <div className="flex flex-row justify-between ">
+              <p className="text-sm text-gray-500">Курс юаня</p>
+              <p className="text-sm">{displayYuanRate.toFixed(2)} ₽</p>
+            </div>
+            <div className="flex flex-row justify-between ">
               <p className="text-sm text-gray-500">Комиссия</p>
-              <p className="text-sm">{comission} ¥</p>
+              <p className="text-sm">{comission} ₽</p>
             </div>
             <div className="flex flex-row justify-between ">
               <p className="text-sm text-gray-500">Доставка по Китаю</p>
-              <p className="text-sm">{deliveryInChina} ¥</p>
+              <p className="text-sm">{deliveryInChina} ₽</p>
             </div>
             <span className="h-0.25 w-full bg-gray-300"></span>
             <div className="flex flex-row justify-between">
               <p>Итого</p>
               <div className="flex flex-col">
-                <p>{grandTotal} ¥</p>
+                <p>{grandTotal.toFixed(2)} ₽</p>
               </div>
             </div>
           </div>

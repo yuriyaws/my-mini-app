@@ -17,7 +17,62 @@ function Add({ tgUserId }) {
   const [status, setStatus] = useState("в корзине"); // например, дефолтный статус
   const [created_at, setCreated_at] = useState(new Date().toISOString());
 
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
+  const isValidAmount = (amount) => {
+    const number = parseFloat(amount);
+    return !isNaN(number) && number > 0;
+  };
+
   const handleAddItem = async () => {
+    // Проверка URL
+    if (!isValidUrl(url)) {
+      alert("Некорректная ссылка. Пожалуйста, введите правильный URL.");
+      return;
+    }
+
+    // Проверка суммы (price_cny)
+    if (!isValidAmount(price_cny)) {
+      alert("Некорректная цена товара. Введите положительное число.");
+      return;
+    }
+
+    let errorsFound = false;
+
+    if (!isValidUrl(url)) {
+      alert("Некорректная ссылка. Пожалуйста, введите правильный URL.");
+      errorsFound = true;
+    }
+
+    if (!screenshot_url) {
+      alert("Пожалуйста, загрузите скриншот товара.");
+      errorsFound = true;
+    }
+
+    if (!size.trim()) {
+      alert("Пожалуйста, укажите размер товара.");
+      errorsFound = true;
+    }
+
+    if (!category) {
+      alert("Пожалуйста, выберите категорию.");
+      errorsFound = true;
+    }
+
+    if (!isValidAmount(price_cny)) {
+      alert("Некорректная сумма. Введите положительное число.");
+      errorsFound = true;
+    }
+
+    if (errorsFound) return;
+
     const { data, error } = await supabase.from("item").insert([
       {
         url,
@@ -247,7 +302,6 @@ function Add({ tgUserId }) {
               <option value="Крем">Крем</option>
               <option value="Помада">Помада</option>
             </optgroup>
-            <option value="Прочее">Прочее</option>
           </select>
         </label>
       </div>
