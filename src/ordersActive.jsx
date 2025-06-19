@@ -228,7 +228,8 @@ function OrdersActive({ tgUserId }) {
                 <></>
               )}
 
-              {order.status === "передан в доставку" ? (
+              {order.status === "передан в доставку" ||
+              order.status === "доставлен" ? (
                 <div className="flex flex-col">
                   <label className="text-xs text-gray-800 pb-1">
                     Трек номер
