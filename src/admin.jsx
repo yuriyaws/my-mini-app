@@ -47,6 +47,15 @@ const Admin = () => {
         case "desc":
           query = query.order("created_at", { ascending: false });
           break;
+        case "ожидает оплаты":
+        case "заказ принят":
+        case "куплен в китае":
+        case "передан в доставку":
+        case "доставлен":
+          query = query
+            .eq("status", sortOption)
+            .order("created_at", { ascending: false });
+          break;
         default:
           query = query.order("id", { ascending: false });
       }
@@ -99,11 +108,11 @@ const Admin = () => {
             <option value="desc">Сначала новые</option>
           </optgroup>
           <optgroup label="По статусу">
-            <option value="">Ожидает оплаты</option>
-            <option value="">Заказ принят</option>
-            <option value="">Куплен в китае</option>
-            <option value="">Передан в доставку</option>
-            <option value="">Доставлен</option>
+            <option value="ожидает оплаты">Ожидает оплаты</option>
+            <option value="заказ принят">Заказ принят</option>
+            <option value="куплен в китае">Куплен в китае</option>
+            <option value="передан в доставку">Передан в доставку</option>
+            <option value="доставлен">Доставлен</option>
           </optgroup>
         </select>
       </div>
