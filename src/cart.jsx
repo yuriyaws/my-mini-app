@@ -9,6 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 function Cart({ setPage, tgUserId }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
     fetchCartItems();
@@ -89,6 +90,7 @@ function Cart({ setPage, tgUserId }) {
                     src={item.screenshot_url}
                     className="h-22 w-22 rounded-2xl px-2 py-2"
                     alt={item.url}
+                    onClick={() => setPreviewUrl(item.screenshot_url)}
                   />
                   <div className="flex-col ml-2.5">
                     <p className="text-sm truncate w-[160px] h-[1.2em] whitespace-nowrap overflow-hidden">
@@ -182,6 +184,18 @@ function Cart({ setPage, tgUserId }) {
           </div>
         )}
       </div>
+      {previewUrl && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={() => setPreviewUrl(null)}
+        >
+          <img
+            src={previewUrl}
+            className="max-w-full max-h-full object-contain rounded-lg"
+            alt="preview"
+          />
+        </div>
+      )}
     </>
   );
 }

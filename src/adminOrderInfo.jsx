@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 const AdminOrderInfo = ({ order, goBack }) => {
+  const [previewUrl, setPreviewUrl] = useState(null);
   return (
     <div className="px-5 mt-24 mb-21">
       <div className="fixed w-full top-0 left-0 px-5 pt-7 bg-white border-b border-gray-200 flex items-start">
@@ -65,55 +68,43 @@ const AdminOrderInfo = ({ order, goBack }) => {
       <div className="mt-5 font-medium">
         <h1>Товары</h1>
         <div className="mt-2 space-y-3">
-          {order.orderItems?.length > 0 ? (
-            order.orderItems.map((orderItem) => (
-              <div
-                key={orderItem.id}
-                className="border border-gray-200 rounded-lg p-3 flex flex-row gap-1"
-              >
-                {orderItem.item?.screenshot_url && (
-                  <img
-                    src={orderItem.item.screenshot_url}
-                    alt="Товар"
-                    className="w-24 h-auto mt-2 rounded"
-                  />
-                )}
-                <div>
-                  <p className="text-sm font-medium">
-                    {orderItem.item?.category} — {orderItem.item?.size}
-                  </p>
-                  <a
-                    href={orderItem.item?.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 text-sm underline break-all"
-                  >
-                    {orderItem.item?.url}
-                  </a>
-                  <p className="text-sm">Цена: {orderItem.item?.price_cny} ¥</p>
+          {order.orderItems?.map((oi) => (
+            <div
+              key={oi.id}
+              className="flex items-center gap-2 border border-gray-300 p-2 rounded-md bg-gray-50"
+            >
+              <img
+                src={oi.item?.screenshot_url}
+                alt={oi.item?.url}
+                className="w-12 h-12 object-cover rounded"
+                onClick={() => setPreviewUrl(oi.item?.screenshot_url)}
+              />
+              <div className="flex flex-col">
+                <p className="text-sm font-medium">{oi.item?.url}</p>
+                <div className="flex flex-row items-center gap-2">
+                  <p className="text-xs text-gray-500">{oi.item?.category}</p>
+                  <span className="h-1 w-1 rounded-2xl bg-gray-500"></span>
+                  <p className="text-xs text-gray-500">{oi.item?.size}</p>
                 </div>
+                <p className="text-xs">{oi.item?.price_cny} ¥</p>
               </div>
-            ))
-          ) : (
-            <p className="text-sm text-gray-500">Нет товаров в заказе</p>
-          )}
+            </div>
+          ))}
         </div>
       </div>
+      {previewUrl && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={() => setPreviewUrl(null)}
+        >
+          <img
+            src={previewUrl}
+            className="max-w-full max-h-full object-contain rounded-lg"
+            alt="preview"
+          />
+        </div>
+      )}
     </div>
-
-    // <div className="px-5 mt-36">
-    //   <button onClick={goBack} className="mb-4 text-blue-500 underline">
-    //     ← Назад
-    //   </button>
-    //   <h1 className="text-xl font-bold">Информация о заказе #{order.id}</h1>
-    //   <p>Клиент: {order.fio_client}</p>
-    //   <p>Телефон: {order.phone_number}</p>
-    //   <p>Город: {order.city}</p>
-    //   <p>Адрес: {order.adress}</p>
-    //   <p>Индекс: {order.index}</p>
-    //   <p>Сумма: {order.total} ¥</p>
-    //   {/* и так далее */}
-    // </div>
   );
 };
 

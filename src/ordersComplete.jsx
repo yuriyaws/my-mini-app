@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 function OrdersComplete({ tgUserId }) {
   const [orders, setOrders] = useState([]); // товары в корзине
   const [loading, setLoading] = useState(true); // статус загрузки
-
+  const [previewUrl, setPreviewUrl] = useState(null);
   useEffect(() => {
     fetchCartItems();
   }, []);
@@ -174,6 +174,7 @@ function OrdersComplete({ tgUserId }) {
                     src={oi.item?.screenshot_url}
                     alt={oi.item?.url}
                     className="w-12 h-12 object-cover rounded"
+                    onClick={() => setPreviewUrl(oi.item?.screenshot_url)}
                   />
                   <div className="flex flex-col">
                     <p className="text-sm font-medium">{oi.item?.url}</p>
@@ -204,6 +205,18 @@ function OrdersComplete({ tgUserId }) {
           ))
         )}
       </div>
+      {previewUrl && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={() => setPreviewUrl(null)}
+        >
+          <img
+            src={previewUrl}
+            className="max-w-full max-h-full object-contain rounded-lg"
+            alt="preview"
+          />
+        </div>
+      )}
     </>
   );
 }
