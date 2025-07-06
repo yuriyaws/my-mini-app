@@ -153,7 +153,7 @@ function App() {
           </p>
         </button>
 
-        {tgUserId === 1919233418 ? (
+        {tgUserId == "1919233418" ? (
           <button
             className="flex flex-col justify-center items-center"
             onClick={() => setPage("admin")}
